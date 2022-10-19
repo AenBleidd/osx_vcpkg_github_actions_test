@@ -1,0 +1,16 @@
+{
+    "name": "test",
+    "version-string": "1.0.0",
+    "dependencies":
+    [
+        "boost-process",
+        "boost-filesystem",
+        "boost-log",
+        "boost-math",
+        "boost-program-options",
+        "boost-random",
+        "boost-serialization",
+        "boost-thread",
+        "boost-timer"
+    ]
+}

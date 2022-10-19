@@ -1,0 +1,24 @@
+name: OSX
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: build
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        app: [test]
+      fail-fast: false
+    steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '12.5.1'
+      - uses: actions/checkout@v2
+
+      - name: Build
+        if: ${{ success() }}
+        run: |
+          git clone https://github.com/microsoft/vcpkg.git
+          cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake
