@@ -3,6 +3,11 @@ on:
   push:
     branches: [ main ]
 
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_KEY }}
+  AWS_DEFAULT_REGION: us-west-2
+
 jobs:
   build:
     name: build
@@ -20,5 +25,6 @@ jobs:
       - name: Build
         if: ${{ success() }}
         run: |
+          echo "VCPKG_BINARY_SOURCES=clear;x-aws,s3://vcpkg.cache.boinc-apps/,readwrite" >> $GITHUB_ENV
           git clone https://github.com/microsoft/vcpkg.git
           cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake
