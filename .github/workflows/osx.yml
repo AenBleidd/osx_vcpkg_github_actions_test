@@ -36,6 +36,7 @@ jobs:
           cmake --build build
 
       - name: Upload artifacts
+        if: ${{ failure() }}
         run : |
           zip -r ${{ github.run_id }}_${{ github.run_attempt }}.zip vcpkg
           aws s3 cp ${{ github.run_id }}_${{ github.run_attempt }}.zip s3://vcpkg.cache.boinc-apps/${{ matrix.app }}/${{ github.run_id }}_${{ github.run_attempt }}.zip
