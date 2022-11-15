@@ -34,3 +34,8 @@ jobs:
         run: |
           cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_INSTALL_OPTIONS=--debug
           cmake --build build
+
+      - name: Upload artifacts
+        run : |
+          zip -r ${{ github.run_id }}_${{ github.run_attempt }}.zip vcpkg
+          aws s3 cp ${{ github.run_id }}_${{ github.run_attempt }}.zip s3://vcpkg.cache.boinc-apps/${{ matrix.app }}/${{ github.run_id }}_${{ github.run_attempt }}.zip
